@@ -1,4 +1,7 @@
-import {FC} from 'react'
+import {useState, FC} from 'react'
+
+import FilterNews from './FilterNews'
+
 import styled from '@emotion/styled'
 
 const TabList = styled.div`
@@ -33,6 +36,7 @@ type TabsProps = {
   onClick: (index: number) => void;
   orientation?: "horizontal" | "vertical";
   className?: string;
+  filterNews?: string
 }
 
 const Tabs: FC<TabsProps> = ({
@@ -43,6 +47,7 @@ const Tabs: FC<TabsProps> = ({
   orientation = "horizontal"
 }) => {
   const Panel = tabs && tabs.find((tab) => tab.index === currentTab);
+  const [filterNews, setFilterNews] = useState('')
 
   return (
     <div
@@ -67,12 +72,17 @@ const Tabs: FC<TabsProps> = ({
           </ItemTab>
         ))}
       </TabList>
+
+      {/* <FilterNews
+        filterNews = {filterNews}
+      /> */}
+
       <div
         role="tabpanel"
         aria-labelledby={`btn-${currentTab}`}
         id={`tabpanel-${currentTab}`}
       >
-        {Panel && <Panel.Component index={currentTab} />}
+        {Panel && <Panel.Component index={currentTab}/>}
       </div>
     </div>
   )

@@ -2,7 +2,6 @@ import {useState, useEffect, FC} from 'react'
 import newsApi from "../services/newsApi"
 import useInfiniteScroll from '../hooks/useInfiniteScroll'
 import Card from './Card'
-import { generateId } from '../helpers'
 
 import styled from '@emotion/styled'
 
@@ -21,10 +20,11 @@ const TabAllNews: FC<{}> = () => {
   const [data, setData] = useState<any>([])
   const [page, setPage] = useState(1);
   const [isFetching, setIsFetching] = useInfiniteScroll(moreData);
+  const [filterNews, setFilterNews] = useState('')
 
 
   const loadData = () => {
-    let url = `${process.env.REACT_APP_API}?query=&page=0`;
+    let url = `${process.env.REACT_APP_API}?query=${filterNews}&page=0`;
     (async () => {
       try {
         const res = await fetch(url)
@@ -37,7 +37,7 @@ const TabAllNews: FC<{}> = () => {
   }
 
   function moreData() {
-    let url = `${process.env.REACT_APP_API}?query=&page=${page}`;
+    let url = `${process.env.REACT_APP_API}?query=${filterNews}&page=${page}`;
     (async () => {
       try {
         const res = await fetch(url)
@@ -48,6 +48,23 @@ const TabAllNews: FC<{}> = () => {
       } catch (error) {
         console.log(error)
       }
+
+      /* try {
+        if (isFetching) {
+          setPage(page+1)
+          const res = await fetch(url)
+          const response = await res.json()
+          setData([...data, ...response.hits])
+        } else {
+          const res = await fetch(url)
+          const response = await res.json()
+          setData(response.hits)
+
+        }
+        setIsFetching(false)
+      } catch (error) {
+        console.log(error)
+      } */
     })()
   }
 
@@ -63,18 +80,34 @@ const TabAllNews: FC<{}> = () => {
 
   useEffect(()=>{
     loadData()
-  }, [])
+    setPage(1)
+  }, [filterNews])
 
-  if(data.length==0) {
+
+
+
+
+  if(data.length===0) {
     return <div>Loading...</div>
   }
   return (
-    <List>
+    <>
+      <select
+        value={filterNews}
+        onChange={e => setFilterNews(e.target.value) }
+      >
+        <option value="">Select your news</option>
+        <option value="angular">Angular</option>
+        <option value="reactjs">Reactjs</option>
+        <option value="vuejs">Vuejs</option>
+      </select>
+
+      <List>
       {
-          data?.map((d:any) => (
+          data?.map((d:any, i:number) => (
           (d.story_title !== null && d.story_url !== null && d.created_at !== null) &&
           <Card
-            key= {generateId()}
+            key= {i}
             title={d.story_title}
             url={d.story_url}
             created_at={d.created_at}
@@ -83,6 +116,8 @@ const TabAllNews: FC<{}> = () => {
 
       }
     </List>
+    </>
+
   )
 }
 

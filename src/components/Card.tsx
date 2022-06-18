@@ -1,0 +1,74 @@
+import styled from "@emotion/styled";
+import iconTime from "../images/icon-time.svg";
+import LikeOutline from "../images/icon-favorite-outline.svg"
+
+const ItemList = styled.li`
+  all: unset;
+  opacity: 0.8;
+  border-radius: 6px;
+  border: solid 1px #979797;
+  background-color: #fff;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  &:hover {
+    opacity: 0.6;
+  }
+`;
+const Link = styled.a`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px 26px;
+  text-decoration: none;
+`;
+const Title = styled.h2`
+  font-size: 0.875rem;
+  color: #6b6b6b;
+  font-weight: 500;
+  line-height: 1.43;
+  letter-spacing: 0.25px;
+  margin-bottom: 0;
+`;
+const Time = styled.span`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.688rem;
+  color: #767676;
+  & img {
+    width: 16px;
+  }
+`;
+const Like = styled.div`
+  background-color: #6060600f;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 20px;
+`;
+
+type CardTypes = {
+  title: string;
+  url: string;
+  created_at: string;
+};
+
+function Card({ title, url, created_at }: CardTypes) {
+  return (
+    <ItemList>
+      <Link href={url} target="_blank" rel="noopener noreferrer">
+        <Time>
+          <img src={iconTime} alt="icon clock" />
+          {created_at}
+        </Time>
+        <Title>{title}</Title>
+      </Link>
+      <Like>
+          <img src={LikeOutline} alt="Heart Outline"/>
+        </Like>
+    </ItemList>
+  );
+}
+
+export default Card;

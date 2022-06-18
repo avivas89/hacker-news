@@ -1,5 +1,6 @@
 import {useState, useEffect, FC} from 'react'
 import newsApi from "../services/newsApi"
+import useInfiniteScroll from '../hooks/useInfiniteScroll'
 import Card from './Card'
 import { generateId } from '../helpers'
 
@@ -19,7 +20,8 @@ const List = styled.ul`
 const TabAllNews: FC<{}> = () => {
   const [data, setData] = useState<any>([])
   const [page, setPage] = useState(1);
-  const [isFetching, setIsFetching] = useState(false);
+  const [isFetching, setIsFetching] = useInfiniteScroll(moreData);
+
 
   const loadData = () => {
     let url = `${process.env.REACT_APP_API}?query=&page=0`;
@@ -34,7 +36,7 @@ const TabAllNews: FC<{}> = () => {
     })()
   }
 
-  const moreData = () => {
+  function moreData() {
     let url = `${process.env.REACT_APP_API}?query=&page=${page}`;
     (async () => {
       try {
@@ -49,6 +51,8 @@ const TabAllNews: FC<{}> = () => {
     })()
   }
 
+
+
   /*useEffect(() => {
     (async () => {
       const getData = await newsApi()
@@ -57,26 +61,9 @@ const TabAllNews: FC<{}> = () => {
     })()
   }, [])*/
 
-  function isScrolling(){
-    if(window.innerHeight + document.documentElement.scrollTop!==document.documentElement.offsetHeight){
-      return;
-    } else {
-      setIsFetching(true)
-    }
-  }
-
   useEffect(()=>{
     loadData()
-    window.addEventListener("scroll", isScrolling);
-    return () => window.removeEventListener("scroll", isScrolling);
   }, [])
-
-  useEffect(()=>{
-    if (isFetching){
-      moreData();
-   }
-  }, [isFetching]);
-
 
   if(data.length==0) {
     return <div>Loading...</div>

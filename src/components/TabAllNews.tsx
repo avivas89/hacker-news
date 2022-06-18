@@ -16,36 +16,84 @@ const List = styled.ul`
   }
 `
 
-
-
 const TabAllNews: FC<{}> = () => {
   const [data, setData] = useState<any>([])
+  const [page, setPage] = useState(1);
+  const [isFetching, setIsFetching] = useState(false);
 
-  useEffect(() => {
+  const loadData = () => {
+    let url = `${process.env.REACT_APP_API}?query=&page=0`;
+    (async () => {
+      try {
+        const res = await fetch(url)
+        const response = await res.json()
+        setData(response.hits)
+      } catch (error) {
+
+      }
+    })()
+  }
+
+  const moreData = () => {
+    let url = `${process.env.REACT_APP_API}?query=&page=${page}`;
+    (async () => {
+      try {
+        const res = await fetch(url)
+        const response = await res.json()
+        setData([...data, ...response.hits])
+        setPage(page+1)
+        setIsFetching(false)
+      } catch (error) {
+        console.log(error)
+      }
+    })()
+  }
+
+  /*useEffect(() => {
     (async () => {
       const getData = await newsApi()
-      setData(getData.hits)
+      setData(getData)
 
     })()
+  }, [])*/
+
+  function isScrolling(){
+    if(window.innerHeight + document.documentElement.scrollTop!==document.documentElement.offsetHeight){
+      return;
+    } else {
+      setIsFetching(true)
+    }
+  }
+
+  useEffect(()=>{
+    loadData()
+    window.addEventListener("scroll", isScrolling);
+    return () => window.removeEventListener("scroll", isScrolling);
   }, [])
 
+  useEffect(()=>{
+    if (isFetching){
+      moreData();
+   }
+  }, [isFetching]);
 
-  if(!data) {
+
+  if(data.length==0) {
     return <div>Loading...</div>
   }
   return (
     <List>
       {
+          data?.map((d:any) => (
+          (d.story_title !== null && d.story_url !== null && d.created_at !== null) &&
+          <Card
+            key= {generateId()}
+            title={d.story_title}
+            url={d.story_url}
+            created_at={d.created_at}
+          />
+        ))
 
-        data?.map((d:any) => (
-        (d.story_title !== null && d.story_url !== null && d.created_at !== null) &&
-        <Card
-          key= {generateId()}
-          title={d.story_title}
-          url={d.story_url}
-          created_at={d.created_at}
-        />
-      ))
       }
     </List>
   )

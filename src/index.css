@@ -3,10 +3,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #fcfcfc;
+  box-sizing: border-box;
 }
 
 body * {
   font-family: 'Roboto', sans-serif;
+  box-sizing: border-box;
 }
 
 

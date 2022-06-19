@@ -3,10 +3,14 @@ import logo from '../images/hacker-news.png'
 import { ReactNode } from "react";
 
 const Header = styled.div`
-  margin: 0 0 70px;
-  padding: 44px 1082px 42px 150px;
+  margin: 0 0 40px;
+  padding: 25px;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.12);
   background-image: linear-gradient(to bottom, #ececec -32%, #fff 124%);
+  @media (min-width: 1200px) {
+    padding: 44px 150px 42px 150px;
+    margin: 0 0 70px;
+  }
 `
 const Image = styled.img`
   max-width: 300px;

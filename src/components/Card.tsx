@@ -11,6 +11,7 @@ const ItemList = styled.li`
   display: flex;
   align-items: stretch;
   justify-content: space-between;
+  margin-bottom: 20px;
   &:hover {
     opacity: 0.6;
   }

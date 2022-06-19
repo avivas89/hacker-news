@@ -1,8 +1,8 @@
 const url = `${process.env.REACT_APP_API}`
 
-const newsApi = async () => {
+export const newsApi = async (query:any) => {
   try {
-    const res = await fetch(url)
+    const res = await fetch(`${url}?${query}`)
     const response = await res.json()
     return response
 
@@ -10,5 +10,3 @@ const newsApi = async () => {
     console.log(error)
   }
 }
-
-export default newsApi

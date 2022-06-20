@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import iconTime from "../images/icon-time.svg";
 import LikeOutline from "../images/icon-favorite-outline.svg"
+import LikeFill from "../images/icon-favorite-fill.svg"
 
 const ItemList = styled.li`
   all: unset;
@@ -50,12 +51,14 @@ const Like = styled.div`
 `;
 
 type CardTypes = {
-  title: string;
-  url: string;
-  created_at: string;
+  title: string
+  url: string
+  created_at: string
+  click: any
+  favorite?: boolean
 };
 
-function Card({ title, url, created_at }: CardTypes) {
+function Card({ title, url, created_at, click, favorite }: CardTypes) {
   return (
     <ItemList>
       <Link href={url} target="_blank" rel="noopener noreferrer">
@@ -66,8 +69,12 @@ function Card({ title, url, created_at }: CardTypes) {
         <Title>{title}</Title>
       </Link>
       <Like>
-          <img src={LikeOutline} alt="Heart Outline"/>
-        </Like>
+        {favorite? (
+          <img src={LikeFill} alt="Heart fill" onClick={click} />
+        ) : (
+          <img src={LikeOutline} alt="Heart Outline" onClick={click} />
+        )}
+      </Like>
     </ItemList>
   );
 }

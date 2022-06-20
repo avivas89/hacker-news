@@ -1,7 +1,4 @@
-import {useState, FC} from 'react'
-
-import FilterNews from './FilterNews'
-
+import {FC} from 'react'
 import styled from '@emotion/styled'
 
 const TabList = styled.div`
@@ -9,7 +6,6 @@ const TabList = styled.div`
   align-items: center;
   justify-content: center;
 `
-
 const ItemTab = styled.button`
   border: 1px solid #d6d6d6;
   border-radius: 2px;
@@ -47,7 +43,6 @@ const Tabs: FC<TabsProps> = ({
   orientation = "horizontal"
 }) => {
   const Panel = tabs && tabs.find((tab) => tab.index === currentTab);
-  const [filterNews, setFilterNews] = useState('')
 
   return (
     <div
@@ -72,11 +67,6 @@ const Tabs: FC<TabsProps> = ({
           </ItemTab>
         ))}
       </TabList>
-
-      {/* <FilterNews
-        filterNews = {filterNews}
-      /> */}
-
       <div
         role="tabpanel"
         aria-labelledby={`btn-${currentTab}`}

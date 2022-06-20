@@ -35,7 +35,6 @@ const FilterNews = ({filterNews, setFilterNews}:any) => {
       <Select
         placeholder={filterNews ? imagePlace : 'Select your news'}
         defaultValue={filterNews}
-        //value={}
         options={options}
         onChange={e => setFilterNews(e.value)}
         formatOptionLabel={({label, image}:any) => (
@@ -44,7 +43,6 @@ const FilterNews = ({filterNews, setFilterNews}:any) => {
             <span>{label}</span>
           </Flex>
         )}
-        closeMenuOnSelect={false}
         styles={{
           control: (provided, state) => ({
             ...provided,

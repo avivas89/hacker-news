@@ -1,12 +1,10 @@
-import { useState } from 'react';
 import Select from 'react-select';
 import Angular from '../images/icon-angular.png'
 import React from '../images/icon-react.png'
 import Vue from '../images/icon-vuejs.png'
 import styled from '@emotion/styled'
-import { isFocusable } from '@testing-library/user-event/dist/utils';
 
-const options = [
+const optionsSelect:any = [
   { value: '', label: 'Select your news', image: ''},
   { value: 'angular', label: 'Angular', image: `${Angular}`},
   { value: 'reactjs', label: 'Reactjs', image: `${React}` },
@@ -17,17 +15,12 @@ const Flex = styled.div`
   display: flex;
   align-items: center;
   column-gap: 10px;
-  text-transform: capitalize;
 `
 
 const FilterNews = ({filterNews, setFilterNews}:any) => {
   let imagePlace
-  if(filterNews === 'angular') {
-    imagePlace = <Flex><img src={Angular} width='18'/> {filterNews}</Flex>
-  } else if(filterNews === 'reactjs') {
-    imagePlace = <Flex><img src={React} width='18'/>  {filterNews}</Flex>
-  } else {
-    imagePlace = <Flex><img src={Vue} width='18'/>  {filterNews}</Flex>
+  if(filterNews === optionsSelect.value) {
+    imagePlace = <Flex><img src={optionsSelect.image} width='18' alt={optionsSelect.label}/> <span>{optionsSelect.label}</span></Flex>
   }
 
   return (
@@ -35,11 +28,11 @@ const FilterNews = ({filterNews, setFilterNews}:any) => {
       <Select
         placeholder={filterNews ? imagePlace : 'Select your news'}
         defaultValue={filterNews}
-        options={options}
+        options={optionsSelect}
         onChange={e => setFilterNews(e.value)}
         formatOptionLabel={({label, image}:any) => (
           <Flex>
-            {(image != '') && <img src={image} alt={label} width='18'/>}
+            {(image !== '') && <img src={image} alt={label} width='18'/>}
             <span>{label}</span>
           </Flex>
         )}

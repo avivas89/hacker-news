@@ -1,3 +1,4 @@
+import { CardTypes } from "../types/Types";
 import styled from "@emotion/styled";
 import iconTime from "../images/icon-time.svg";
 import LikeOutline from "../images/icon-favorite-outline.svg"
@@ -49,14 +50,6 @@ const Like = styled.div`
   justify-content: center;
   padding: 0 20px;
 `;
-
-type CardTypes = {
-  title: string
-  url: string
-  created_at: string
-  click: any
-  favorite?: boolean
-};
 
 function Card({ title, url, created_at, click, favorite }: CardTypes) {
   return (

@@ -1,10 +1,12 @@
 import Select from 'react-select';
+import { formatOptionLabel, FilterNewsTypes } from '../types/Types';
+
 import Angular from '../images/icon-angular.png'
 import React from '../images/icon-react.png'
 import Vue from '../images/icon-vuejs.png'
 import styled from '@emotion/styled'
 
-const optionsSelect:any = [
+const options:any = [
   { value: '', label: 'Select your news', image: ''},
   { value: 'angular', label: 'Angular', image: `${Angular}`},
   { value: 'reactjs', label: 'Reactjs', image: `${React}` },
@@ -16,24 +18,21 @@ const Flex = styled.div`
   align-items: center;
   column-gap: 10px;
 `
-
-const FilterNews = ({filterNews, setFilterNews}:any) => {
-  let imagePlace
-  if(filterNews === optionsSelect.value) {
-    imagePlace = <Flex><img src={optionsSelect.image} width='18' alt={optionsSelect.label}/> <span>{optionsSelect.label}</span></Flex>
-  }
+const FilterNews = ({filterNews, setFilterNews}:FilterNewsTypes) => {
+  const category = options.find((o:any) => o.value === filterNews)
+  let labelCategory = <Flex><img src={category.image} width='18' alt={category.label}/>{category.label}</Flex>
 
   return (
     <div>
       <Select
-        placeholder={filterNews ? imagePlace : 'Select your news'}
+        placeholder={filterNews ? labelCategory : 'Select your news'}
         defaultValue={filterNews}
-        options={optionsSelect}
-        onChange={e => setFilterNews(e.value)}
-        formatOptionLabel={({label, image}:any) => (
+        options={options}
+        onChange={(e:any) => setFilterNews(e.value)}
+        formatOptionLabel={({label, image}:formatOptionLabel) => (
           <Flex>
             {(image !== '') && <img src={image} alt={label} width='18'/>}
-            <span>{label}</span>
+            {label}
           </Flex>
         )}
         styles={{

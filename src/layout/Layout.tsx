@@ -35,7 +35,6 @@ const Layout = ({children}:{children: ReactNode}) => {
         {children}
       </div>
     </Main>
-
   )
 }
 

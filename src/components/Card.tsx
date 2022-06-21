@@ -49,6 +49,9 @@ const Like = styled.div`
   flex-direction: column;
   justify-content: center;
   padding: 0 20px;
+  & img {
+    cursor: pointer;
+  }
 `;
 
 function Card({ title, url, created_at, click, favorite }: CardTypes) {

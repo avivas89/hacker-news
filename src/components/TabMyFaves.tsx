@@ -15,7 +15,7 @@ const List = styled.ul`
 `
 
 const TabMyFaves: FC<{}> = () => {
-  const [listFavorite, setListFavorite] = useState<any>([])
+  const [listFavorite, setListFavorite] = useState<(string | number | boolean)[]>([])
 
   const loadFavorites = () => {
     const listNewsLS = localStorage.getItem('favoritePost') ? JSON.parse(localStorage.getItem('favoritePost') || "") : []

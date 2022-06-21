@@ -16,11 +16,11 @@ const List = styled.ul`
   }
 `
 const TabAllNews: FC<{}> = () => {
-  const [data, setData] = useState<any>([])
-  const [page, setPage] = useState(1);
+  const [data, setData] = useState<string[]>([])
+  const [page, setPage] = useState<number>(1);
   const [/*isFetching*/, setIsFetching] = useInfiniteScroll(moreData);
-  const [filterNews, setFilterNews] = useState(localStorage.getItem('filterSelectNew') ? localStorage.getItem('filterSelectNew') : "")
-  const [dataFavorite, setDataFavorite] = useState<any>(localStorage.getItem('favoritePost') ? JSON.parse(localStorage.getItem('favoritePost') || "") : [])
+  const [filterNews, setFilterNews] = useState<string | null>(localStorage.getItem('filterSelectNew') ? localStorage.getItem('filterSelectNew') : "")
+  const [dataFavorite, setDataFavorite] = useState<any[]>(localStorage.getItem('favoritePost') ? JSON.parse(localStorage.getItem('favoritePost') || "") : [])
 
   useEffect(() => {
     const loadData = () => {
@@ -60,8 +60,8 @@ const TabAllNews: FC<{}> = () => {
     })()
   }
 
-  const handleFavorite = (postId:any) => {
-    const itemPost = data.find((post:any) => post.created_at_i === postId)
+  const handleFavorite = (postId:string[]) => {
+    const itemPost:any = data.find((post:any) => post.created_at_i === postId)
     if (dataFavorite.some((post: any) => post.created_at_i === postId)) {
       const setFavorite = dataFavorite.map((p:any) => {
         if (p.created_at_i === postId) {p.favorite = !p.favorite}
@@ -82,7 +82,6 @@ const TabAllNews: FC<{}> = () => {
     return item2
   }
 
-
   return (
     <>
       {!data ? (
@@ -93,7 +92,6 @@ const TabAllNews: FC<{}> = () => {
             filterNews={filterNews ? filterNews : ''}
             setFilterNews={framework}
           />
-
           <List>
             {
               data?.map((d: any, i: number) => (

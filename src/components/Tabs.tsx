@@ -1,4 +1,5 @@
 import {FC} from 'react'
+import { TabsProps } from '../types/Types'
 import styled from '@emotion/styled'
 
 const TabList = styled.div`
@@ -21,20 +22,6 @@ const ItemTab = styled.button`
     color: #1797ff;
   }
 `
-
-type TabsProps = {
-  tabs: {
-    label: string;
-    index: number;
-    Component: FC<{index: number}>
-  }[];
-  currentTab: number;
-  onClick: (index: number) => void;
-  orientation?: "horizontal" | "vertical";
-  className?: string;
-  filterNews?: string
-}
-
 const Tabs: FC<TabsProps> = ({
   className = "tabs-component",
   tabs = [],
@@ -43,7 +30,6 @@ const Tabs: FC<TabsProps> = ({
   orientation = "horizontal"
 }) => {
   const Panel = tabs && tabs.find((tab) => tab.index === currentTab);
-
   return (
     <div
       className={
